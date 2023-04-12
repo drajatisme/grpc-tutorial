@@ -18,122 +18,122 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// AddServiceClient is the client API for AddService service.
+// MathServiceClient is the client API for MathService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AddServiceClient interface {
+type MathServiceClient interface {
 	Add(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Multiply(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
-type addServiceClient struct {
+type mathServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAddServiceClient(cc grpc.ClientConnInterface) AddServiceClient {
-	return &addServiceClient{cc}
+func NewMathServiceClient(cc grpc.ClientConnInterface) MathServiceClient {
+	return &mathServiceClient{cc}
 }
 
-func (c *addServiceClient) Add(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *mathServiceClient) Add(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/proto.AddService/Add", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.MathService/Add", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *addServiceClient) Multiply(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *mathServiceClient) Multiply(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/proto.AddService/Multiply", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.MathService/Multiply", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AddServiceServer is the server API for AddService service.
-// All implementations must embed UnimplementedAddServiceServer
+// MathServiceServer is the server API for MathService service.
+// All implementations must embed UnimplementedMathServiceServer
 // for forward compatibility
-type AddServiceServer interface {
+type MathServiceServer interface {
 	Add(context.Context, *Request) (*Response, error)
 	Multiply(context.Context, *Request) (*Response, error)
-	mustEmbedUnimplementedAddServiceServer()
+	mustEmbedUnimplementedMathServiceServer()
 }
 
-// UnimplementedAddServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedAddServiceServer struct {
+// UnimplementedMathServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedMathServiceServer struct {
 }
 
-func (UnimplementedAddServiceServer) Add(context.Context, *Request) (*Response, error) {
+func (UnimplementedMathServiceServer) Add(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
 }
-func (UnimplementedAddServiceServer) Multiply(context.Context, *Request) (*Response, error) {
+func (UnimplementedMathServiceServer) Multiply(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Multiply not implemented")
 }
-func (UnimplementedAddServiceServer) mustEmbedUnimplementedAddServiceServer() {}
+func (UnimplementedMathServiceServer) mustEmbedUnimplementedMathServiceServer() {}
 
-// UnsafeAddServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AddServiceServer will
+// UnsafeMathServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MathServiceServer will
 // result in compilation errors.
-type UnsafeAddServiceServer interface {
-	mustEmbedUnimplementedAddServiceServer()
+type UnsafeMathServiceServer interface {
+	mustEmbedUnimplementedMathServiceServer()
 }
 
-func RegisterAddServiceServer(s grpc.ServiceRegistrar, srv AddServiceServer) {
-	s.RegisterService(&AddService_ServiceDesc, srv)
+func RegisterMathServiceServer(s grpc.ServiceRegistrar, srv MathServiceServer) {
+	s.RegisterService(&MathService_ServiceDesc, srv)
 }
 
-func _AddService_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MathService_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AddServiceServer).Add(ctx, in)
+		return srv.(MathServiceServer).Add(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.AddService/Add",
+		FullMethod: "/proto.MathService/Add",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AddServiceServer).Add(ctx, req.(*Request))
+		return srv.(MathServiceServer).Add(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AddService_Multiply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MathService_Multiply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AddServiceServer).Multiply(ctx, in)
+		return srv.(MathServiceServer).Multiply(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.AddService/Multiply",
+		FullMethod: "/proto.MathService/Multiply",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AddServiceServer).Multiply(ctx, req.(*Request))
+		return srv.(MathServiceServer).Multiply(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AddService_ServiceDesc is the grpc.ServiceDesc for AddService service.
+// MathService_ServiceDesc is the grpc.ServiceDesc for MathService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AddService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.AddService",
-	HandlerType: (*AddServiceServer)(nil),
+var MathService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "proto.MathService",
+	HandlerType: (*MathServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Add",
-			Handler:    _AddService_Add_Handler,
+			Handler:    _MathService_Add_Handler,
 		},
 		{
 			MethodName: "Multiply",
-			Handler:    _AddService_Multiply_Handler,
+			Handler:    _MathService_Multiply_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

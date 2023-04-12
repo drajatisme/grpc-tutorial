@@ -18,7 +18,7 @@ func main() {
 		panic(err)
 	}
 
-	client := proto.NewAddServiceClient(conn)
+	client := proto.NewMathServiceClient(conn)
 	g := gin.Default()
 
 	g.GET("/add/:a/:b", func(ctx *gin.Context) {
